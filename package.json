@@ -1,0 +1,336 @@
+{
+  "name": "zovo-msgpack-viewer",
+  "displayName": "MsgPack Viewer & BSON, CBOR",
+  "description": "MsgPack viewer for VS Code: open MessagePack (.msgpack, .mpk), BSON and CBOR files as a tree with types, sizes and byte offsets, read streams of many values, see any value as JSON and copy it, and search keys and values. Bad data shows its byte offset. Offline, no account.",
+  "version": "0.1.0",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1E2A3A",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/msgpack-viewer-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/theluckystrike/msgpack-viewer-vscode/issues"
+  },
+  "homepage": "https://github.com/theluckystrike/msgpack-viewer-vscode#readme",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "msgpack",
+    "messagepack",
+    "bson",
+    "cbor",
+    "binary json"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onUri"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "msgpackViewer.view",
+        "displayName": "MsgPack Viewer (MessagePack, CBOR, BSON)",
+        "selector": [
+          {
+            "filenamePattern": "*.msgpack"
+          },
+          {
+            "filenamePattern": "*.mpk"
+          },
+          {
+            "filenamePattern": "*.cbor"
+          },
+          {
+            "filenamePattern": "*.bson"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "msgpackViewer.openAs",
+        "title": "Open a File as MessagePack, CBOR or BSON",
+        "category": "MsgPack Viewer",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "msgpackViewer.openSample",
+        "title": "Open a Sample File",
+        "category": "MsgPack Viewer"
+      },
+      {
+        "command": "msgpackViewer.openWalkthrough",
+        "title": "Get Started",
+        "category": "MsgPack Viewer"
+      },
+      {
+        "command": "msgpackViewer.moreViewers",
+        "title": "More free tools by Zovo",
+        "category": "MsgPack Viewer"
+      },
+      {
+        "command": "msgpackViewer.supportDeveloper",
+        "title": "Support the developer",
+        "category": "MsgPack Viewer"
+      },
+      {
+        "command": "msgpackViewer.convert",
+        "title": "Convert to JSON or from JSON (Pro)",
+        "category": "MsgPack Viewer",
+        "icon": "$(json)"
+      },
+      {
+        "command": "msgpackViewer.editValue",
+        "title": "Edit the Selected Value and Save (Pro)",
+        "category": "MsgPack Viewer",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "msgpackViewer.compare",
+        "title": "Compare Two Files (Pro)",
+        "category": "MsgPack Viewer",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "msgpackViewer.batch",
+        "title": "Batch Convert a Folder to JSON (Pro)",
+        "category": "MsgPack Viewer",
+        "icon": "$(files)"
+      },
+      {
+        "command": "msgpackViewer.zovoPro.convert",
+        "title": "Zovo Pro: Convert to JSON or another format"
+      },
+      {
+        "command": "msgpackViewer.zovoPro.edit",
+        "title": "Zovo Pro: Edit a value and save"
+      },
+      {
+        "command": "msgpackViewer.zovoPro.compare",
+        "title": "Zovo Pro: Compare with another file"
+      },
+      {
+        "command": "msgpackViewer.zovoPro.batch",
+        "title": "Zovo Pro: Batch convert this folder to JSON"
+      },
+      {
+        "command": "msgpackViewer.getPro",
+        "title": "Get Zovo Pro (USD 19 once, all Zovo extensions)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "msgpackViewer.payWithPayPal",
+        "title": "Pay for Zovo Pro with PayPal (USD 19, team of 5 USD 59)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "msgpackViewer.unlockWithSponsors",
+        "title": "I already paid: unlock with GitHub Sponsors",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "msgpackViewer.enterLicenseKey",
+        "title": "Enter Zovo Pro license key",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "msgpackViewer.removeLicense",
+        "title": "Remove Zovo Pro from this editor",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "msgpackViewer.payByCard",
+        "title": "Pay for Zovo Pro by card (USD 19)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "msgpackViewer.enterKey",
+        "title": "Enter a key",
+        "category": "Zovo Pro"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "msgpackViewer.convert",
+          "when": "activeCustomEditorId == 'msgpackViewer.view' && config.msgpackViewer.showProTools",
+          "group": "1_msgpack@1"
+        },
+        {
+          "command": "msgpackViewer.editValue",
+          "when": "activeCustomEditorId == 'msgpackViewer.view' && config.msgpackViewer.showProTools",
+          "group": "1_msgpack@2"
+        },
+        {
+          "command": "msgpackViewer.compare",
+          "when": "activeCustomEditorId == 'msgpackViewer.view' && config.msgpackViewer.showProTools",
+          "group": "1_msgpack@3"
+        },
+        {
+          "command": "msgpackViewer.batch",
+          "when": "activeCustomEditorId == 'msgpackViewer.view' && config.msgpackViewer.showProTools",
+          "group": "1_msgpack@4"
+        },
+        {
+          "command": "msgpackViewer.openAs",
+          "when": "activeCustomEditorId == 'msgpackViewer.view'",
+          "group": "1_msgpack@9"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "msgpackViewer.zovoPro.convert",
+          "when": "resourceFilename =~ /\\.(msgpack|mpk|cbor|bson)$/i && !explorerResourceIsFolder && config.msgpackViewer.showProTools",
+          "group": "zovoPro@1"
+        },
+        {
+          "command": "msgpackViewer.zovoPro.compare",
+          "when": "resourceFilename =~ /\\.(msgpack|mpk|cbor|bson)$/i && !explorerResourceIsFolder && config.msgpackViewer.showProTools",
+          "group": "zovoPro@2"
+        },
+        {
+          "command": "msgpackViewer.zovoPro.batch",
+          "when": "resourceFilename =~ /\\.(msgpack|mpk|cbor|bson)$/i && !explorerResourceIsFolder && config.msgpackViewer.showProTools",
+          "group": "zovoPro@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "msgpackViewer.convert",
+          "when": "config.msgpackViewer.showProTools"
+        },
+        {
+          "command": "msgpackViewer.editValue",
+          "when": "config.msgpackViewer.showProTools"
+        },
+        {
+          "command": "msgpackViewer.compare",
+          "when": "config.msgpackViewer.showProTools"
+        },
+        {
+          "command": "msgpackViewer.batch",
+          "when": "config.msgpackViewer.showProTools"
+        },
+        {
+          "command": "msgpackViewer.zovoPro.convert",
+          "when": "false"
+        },
+        {
+          "command": "msgpackViewer.zovoPro.edit",
+          "when": "false"
+        },
+        {
+          "command": "msgpackViewer.zovoPro.compare",
+          "when": "false"
+        },
+        {
+          "command": "msgpackViewer.zovoPro.batch",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "MsgPack Viewer & BSON, CBOR",
+      "properties": {
+        "msgpackViewer.showProTools": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the Zovo Pro tools (convert, edit a value, compare, batch convert) in the Command Palette, the Explorer menu, the editor title menu and the viewer toolbar. Everything free stays visible."
+        },
+        "msgpackViewer.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask once for a Marketplace rating after files opened without an error on two occasions at least 30 minutes apart. \"Later\" asks one more time after 7 days, \"No thanks\" never asks again. Nothing is sent anywhere."
+        },
+        "msgpackViewer.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the small Rate, More free tools and Zovo Pro links at the bottom of the viewer. Nothing is sent anywhere."
+        },
+        "zovo.msgpack.trial.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the 7-day Zovo Pro trial button in the Pro panel."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "msgpackViewer.start",
+        "title": "Get started with MsgPack Viewer & BSON, CBOR",
+        "description": "Read MessagePack, CBOR and BSON files as a tree of values inside VS Code.",
+        "steps": [
+          {
+            "id": "open",
+            "title": "Open a file",
+            "description": "Files ending in .msgpack, .mpk, .cbor and .bson open in the viewer. Any other file opens with Open a File as MessagePack, CBOR or BSON in the Command Palette.\n[Open a sample file](command:msgpackViewer.openSample)",
+            "media": {
+              "image": "images/screenshot.png",
+              "altText": "A MessagePack file with three order records open in the viewer: the tree with keys, types, byte offsets and sizes, and the details of the selected value with its bytes."
+            },
+            "completionEvents": [
+              "onCommand:msgpackViewer.openSample"
+            ]
+          },
+          {
+            "id": "json",
+            "title": "JSON view, copy and search",
+            "description": "Click JSON in the toolbar to see the selected value as JSON, and Copy JSON to copy it. Type in the search box to find keys and values anywhere in the file; a click on a match opens it in the tree.",
+            "media": {
+              "markdown": "walkthrough/json.md"
+            }
+          },
+          {
+            "id": "bad",
+            "title": "Bad data and byte offsets",
+            "description": "Every row shows the byte offset and the size of its value. When the data is damaged or cut short, a note names the byte where reading stopped, and every value before it still shows.",
+            "media": {
+              "markdown": "walkthrough/bad-data.md"
+            }
+          },
+          {
+            "id": "pro",
+            "title": "Convert, edit, compare, batch",
+            "description": "Zovo Pro tools, 1 free try each: convert to JSON and back, edit a value and save it in the same format, compare two files, and convert a whole folder to JSON.",
+            "media": {
+              "markdown": "walkthrough/pro.md"
+            }
+          },
+          {
+            "id": "zovo-related",
+            "title": "Tools that often go with binary JSON",
+            "description": "If your project also has raw binary files, JSON Lines or Avro files, these free Zovo extensions open them. A link opens the extension page, and you choose there whether to install it.\n[Hex Viewer & Binary Viewer](command:extension.open?%5B%22zovo.zovo-hex-viewer%22%5D)\n[JSONL Viewer](command:extension.open?%5B%22zovo.zovo-jsonl-viewer%22%5D)\n[Avro File Viewer](command:extension.open?%5B%22zovo.arrow-avro-viewer%22%5D)",
+            "media": {
+              "markdown": "walkthrough/related.md"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node scripts/test.js",
+    "package": "npx -y @vscode/vsce@3 package --no-dependencies"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike/sponsorships?tier_id=679878"
+  }
+}
